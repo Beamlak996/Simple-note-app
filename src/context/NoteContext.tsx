@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { v4 as uuidV4 } from "uuid";
 import { data } from "../data/data";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export type Note = {
   id: string;
@@ -22,7 +23,7 @@ export const useNote = () => {
 };
 
 export const NoteProvider = ({ children }: { children: ReactNode }) => {
-  const [notes, setNotes] = useState<Note[]>(data);
+  const [notes, setNotes] = useLocalStorage<Note[]>("Notes", data);
 
   const addNotes = (title: string, description: string) => {
     setNotes((prev) => {
